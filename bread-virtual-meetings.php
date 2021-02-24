@@ -26,6 +26,14 @@ function fixVirtualMeetings($value, $formats_by_key) {
         // $value['location_postal_code_1'] = '';
         $value['bus_lines'] = '';
     }
+    if (!empty($value['virtual_meeting_link'])) {
+        if (stristr($value['virtual_meeting_link'], 'zoom')) {
+            if ((stristr($value['virtual_meeting_additional_info'], 'pw')) or (stristr($value['virtual_meeting_additional_info'], 'pass')) or (stristr($value['virtual_meeting_additional_info'], 'code'))) {
+                list($link, $password) = explode("?pwd=", $value['virtual_meeting_link']);
+                $value['virtual_meeting_link'] = $link;
+            }
+        }
+    }
     return $value;
 }
 ?>
